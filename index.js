@@ -1,7 +1,19 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
+require('dotenv').config();
+const db = require('./config/db');
+
+//Middleware's de Seguridad
+app.use(helmet()); //Util para evitar ataques X-Content-Type-Options, X-DNS-Prefetch-Control, X-Frame-Options, Strict-Transport-Security, X-Download-Options, X-XSS-Protection
+
+//Middleware para analizar el cuerpo de las solicitudes
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 // Plantillas EJS
 app.set('view engine', 'ejs');
